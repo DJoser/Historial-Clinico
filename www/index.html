@@ -5,100 +5,94 @@
     <meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="msapplication-tap-highlight" content="no"/>
-    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
-    <link rel="stylesheet" type="text/css" href="css/index.css"/>
 
-    <!-- Librerias -->
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Timeline CSS -->
-    <link href="css/timeline.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <!-- Estilos -->
+    <link href="css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <style>
+        /* Hack para corregir que los botones de navegacion se apilen*/
+        @media (max-width: 767px) {
+            .nav-tabs.nav-justified > li {
+                float: left !important;
+                width: 33% !important;
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="wrapper">
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active">
+            <a data-toggle="tab" href="#inicio">
+                <i class="fa fa-home fa-2x"></i>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#usuarios">
+                <i class="fa fa-users fa-2x"></i>
+            </a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#calendario">
+                <i class="fa fa-calendar fa-2x"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-        <ul class="nav nav-tabs nav-justified">
-            <li class="active">
-                <a data-toggle="tab" href="#inicio">
-                    <i class="fa fa-home fa-2x"></i>
+<div class="container">
+    <div class="tab-content">
+        <div id="inicio" class="tab-pane fade in active">
+            <h3>Pacientes</h3>
+            <div class="list-group">
+                <a href="#" class="list-group-item">
+                    <h4 class="list-group-item-heading">Jose Ramon Navarro</h4>
+                    <p class="list-group-item-text">Edad 22</p>
+                    <p class="list-group-item-text">Sexo M</p>
                 </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="#usuarios">
-                    <i class="fa fa-users fa-2x"></i>
-                </a>
-            </li>
-            <li>
-                <a data-toggle="tab" href="#calendario">
-                    <i class="fa fa-calendar fa-2x"></i>
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <div class="tab-content">
-            <div id="inicio" class="tab-pane fade in active">
-                <h3>Pacientes</h3>
-                <div class="list-group">
-                    <a href="#" class="list-group-item">
-                        <h4 class="list-group-item-heading">Jose Ramon Navarro</h4>
-                        <p class="list-group-item-text">Edad 22</p>
-                        <p class="list-group-item-text">Sexo M</p>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <h4 class="list-group-item-heading">Jose Ramon Navarro</h4>
-                        <p class="list-group-item-text">Edad 22</p>
-                        <p class="list-group-item-text">Sexo M</p>
-                    </a>
-                    <a href="#" class="list-group-item">
-                        <h4 class="list-group-item-heading">Jose Ramon Navarro</h4>
-                        <p class="list-group-item-text">Edad 22</p>
-                        <p class="list-group-item-text">Sexo M</p>
-                    </a>
-                </div>
-            </div>
-            <div id="usuarios" class="tab-pane fade">
-                <h3>Menu 1</h3>
-                <p>Some content in menu 1.</p>
-            </div>
-            <div id="calendario" class="tab-pane fade">
-                <h3>Menu 2</h3>
-                <p>Some content in menu 2.</p>
             </div>
         </div>
+        <div id="usuarios" class="tab-pane fade">
+            <h3>Menu 1</h3>
+            <p>Some content in menu 1.</p>
+        </div>
+        <div id="calendario" class="tab-pane fade">
+            <h3>Menu 2</h3>
+            <p>Some content in menu 2.</p>
+        </div>
     </div>
-
 </div>
-<!-- /#wrapper -->
 
 <!-- Scripts -->
 <script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
+    var app = {
+        initialize: function () {
+            this.bindEvents();
+        },
+        bindEvents: function () {
+            document.addEventListener('deviceready', this.onDeviceReady, false);
+        },
+        onDeviceReady: function () {
+            app.receivedEvent('deviceready');
+        },
+        receivedEvent: function (id) {
+            var parentElement = document.getElementById(id);
+            var listeningElement = parentElement.querySelector('.listening');
+            var receivedElement = parentElement.querySelector('.received');
+
+            listeningElement.setAttribute('style', 'display:none;');
+            receivedElement.setAttribute('style', 'display:block;');
+
+            console.log('Received Event: ' + id);
+        }
+    };
+
     app.initialize();
 </script>
-
-<!-- jQuery -->
-<script src="js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="js/sb-admin-2.js"></script>
-
 </body>
 </html>
