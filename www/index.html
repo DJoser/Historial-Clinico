@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" ng-app="hcApp">
 <head>
     <title>Historial clinico</title>
     <meta charset="utf-8"/>
     <meta name="format-detection" content="telephone=no"/>
     <meta name="msapplication-tap-highlight" content="no"/>
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi"/>
 
@@ -41,58 +43,73 @@
         </li>
     </ul>
 </nav>
-
 <div class="container">
     <div class="tab-content">
-        <div id="inicio" class="tab-pane fade in active">
-            <h3>Pacientes</h3>
-            <div class="list-group">
+        <div id="inicio" class="tab-pane fade in active" ng-controller="inicioController">
+            <h3>Inicio</h3>
+            <h4>{{ejemplo}}</h4>
+        </div>
+        <div id="usuarios" class="tab-pane fade" ng-controller="pacientesController">
+            <h1>Pacientes</h1>
+            <div class="list-group" ng-repeat="p in pacientes">
                 <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Jose Ramon Navarro</h4>
-                    <p class="list-group-item-text">Edad 22</p>
-                    <p class="list-group-item-text">Sexo M</p>
+                    <h4 class="list-group-item-heading">{{p.nombre}}</h4>
+                    <p class="list-group-item-text">{{p.edad}}</p>
                 </a>
             </div>
         </div>
-        <div id="usuarios" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Some content in menu 1.</p>
-        </div>
-        <div id="calendario" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Some content in menu 2.</p>
+        <div id="calendario" class="tab-pane fade" ng-controller="calendarioController">
+            <h3>Calendario</h3>
+            <h4>{{ejemplo}}</h4>
         </div>
     </div>
 </div>
-
+</body>
 <!-- Scripts -->
 <script type="text/javascript" src="cordova.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/angular.min.js"></script>
 <script type="text/javascript">
+    // App
+    var htc = angular.module('hcApp', []);
     var app = {
-        initialize: function () {
+        // Application Constructor
+        initialize: function() {
+            console.log("initializing");
             this.bindEvents();
+            console.log("initializing done");
         },
-        bindEvents: function () {
+        onLoad : function(){},
+        bindEvents: function() {
+            document.addEventListener('load', this.onLoad, false);
             document.addEventListener('deviceready', this.onDeviceReady, false);
+            document.addEventListener('online', this.onOnline, false);
+            document.addEventListener('offline', this.onOffline, false);
         },
-        onDeviceReady: function () {
-            app.receivedEvent('deviceready');
-        },
-        receivedEvent: function (id) {
-            var parentElement = document.getElementById(id);
-            var listeningElement = parentElement.querySelector('.listening');
-            var receivedElement = parentElement.querySelector('.received');
-
-            listeningElement.setAttribute('style', 'display:none;');
-            receivedElement.setAttribute('style', 'display:block;');
-
-            console.log('Received Event: ' + id);
-        }
+        onDeviceReady: function() {},
+        onOffline: function(){}
     };
+    // Controllers
+    htc.controller('inicioController', function($scope){
+        $scope.ejemplo = 5;
+    });
+    htc.controller('pacientesController', function($scope){
+        $scope.pacientes = [
+            {nombre : "Jose Ramon",edad : 25},
+            {nombre : "Navarro Marquez",edad : 26}
+        ];
 
+        for(var i = 0; i < 10; i++){
+            $scope.pacientes.push({nombre : "A",edad : i});
+        }
+
+
+    });
+    htc.controller('calendarioController', function($scope){
+        $scope.ejemplo = 6;
+    });
+    // Punto de inicio
     app.initialize();
 </script>
-</body>
 </html>
