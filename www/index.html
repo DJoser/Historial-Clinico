@@ -24,43 +24,14 @@
     </style>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-    <ul class="nav nav-tabs nav-justified">
-        <li class="active">
-            <a data-toggle="tab" href="#inicio">
-                <i class="fa fa-home fa-2x"></i>
-            </a>
-        </li>
-        <li>
-            <a data-toggle="tab" href="#usuarios">
-                <i class="fa fa-users fa-2x"></i>
-            </a>
-        </li>
-        <li>
-            <a data-toggle="tab" href="#calendario">
-                <i class="fa fa-calendar fa-2x"></i>
-            </a>
-        </li>
-    </ul>
-</nav>
 <div class="container">
-    <div class="tab-content">
-        <div id="inicio" class="tab-pane fade in active" ng-controller="inicioController">
-            <h3>Inicio</h3>
-            <h4>{{ejemplo}}</h4>
-        </div>
-        <div id="usuarios" class="tab-pane fade" ng-controller="pacientesController">
-            <h1>Pacientes</h1>
-            <div class="list-group" ng-repeat="p in pacientes">
-                <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">{{p.nombre}}</h4>
-                    <p class="list-group-item-text">{{p.edad}}</p>
-                </a>
-            </div>
-        </div>
-        <div id="calendario" class="tab-pane fade" ng-controller="calendarioController">
-            <h3>Calendario</h3>
-            <h4>{{ejemplo}}</h4>
+    <div id="usuarios" ng-controller="pacientesController">
+        <h1>Pacientes</h1>
+        <div class="list-group" ng-repeat="p in pacientes">
+            <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">{{p.nombre}}</h4>
+                <p class="list-group-item-text">{{p.edad}}</p>
+            </a>
         </div>
     </div>
 </div>
@@ -75,39 +46,36 @@
     var htc = angular.module('hcApp', []);
     var app = {
         // Application Constructor
-        initialize: function() {
+        initialize: function () {
             console.log("initializing");
             this.bindEvents();
             console.log("initializing done");
         },
-        onLoad : function(){},
-        bindEvents: function() {
+        onLoad: function () {
+        },
+        bindEvents: function () {
             document.addEventListener('load', this.onLoad, false);
             document.addEventListener('deviceready', this.onDeviceReady, false);
             document.addEventListener('online', this.onOnline, false);
             document.addEventListener('offline', this.onOffline, false);
         },
-        onDeviceReady: function() {},
-        onOffline: function(){}
+        onDeviceReady: function () {
+        },
+        onOffline: function () {
+        }
     };
     // Controllers
-    htc.controller('inicioController', function($scope){
-        $scope.ejemplo = 5;
-    });
-    htc.controller('pacientesController', function($scope){
+    htc.controller('pacientesController', function ($scope) {
         $scope.pacientes = [
-            {nombre : "Jose Ramon",edad : 25},
-            {nombre : "Navarro Marquez",edad : 26}
+            {nombre: "Jose Ramon", edad: 25},
+            {nombre: "Navarro Marquez", edad: 26}
         ];
 
-        for(var i = 0; i < 10; i++){
-            $scope.pacientes.push({nombre : "A",edad : i});
+        for (var i = 0; i < 10; i++) {
+            $scope.pacientes.push({nombre: "A", edad: i});
         }
 
 
-    });
-    htc.controller('calendarioController', function($scope){
-        $scope.ejemplo = 6;
     });
     // Punto de inicio
     app.initialize();
